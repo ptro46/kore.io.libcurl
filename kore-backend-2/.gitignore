@@ -1,0 +1,6 @@
+*.o
+.flavor
+.objs
+kore-backend-2.so
+assets.h
+cert
