@@ -48,3 +48,43 @@ the handler call_get_req_1_2 will make the get /api call and if successful post 
 
 the call_get_req_1_2_3_4 handler will make the get /api, post /api, put /api and delete /api calls to the kore-backend-2.
 it therefore sends the json in payload to the post and put calls, and it adds headers to each request so that these are returned.
+
+# examples d'appels
+
+# curl 
+
+```bash
+$ curl -i -k -X GET  https://127.0.0.1:8887/req1_2_3_4
+HTTP/1.1 200 OK
+server: kore (master-23d762d6)
+connection: keep-alive
+keep-alive: timeout=20
+strict-transport-security: max-age=31536000; includeSubDomains
+content-length: 581
+
+{"payload_get":{"i":1,"d":3.140000,"psz":"API_GET"},"payload_post":{"i":2,"d":6.280000,"psz":"API_POST","payload":{"idt":1,"msg":"string message POST"}},"payload_put":{"i":3,"d":9.420000,"psz":"API_PUT","payload":{"idt":2,"msg":"string message PUT"}},"payload_delete":{"i":4,"d":12.560000,"psz":"API_DELETE"},"x-custom-header-get":"value_header_get","x-custom-header-post-1":"value_header_post_1","x-custom-header-post-2":"value_header_post_2","x-custom-header-put-1":"value_header_put_1","x-custom-header-put-2":"value_header_put_2","x-custom-header-delete":"value_header_delete"}
+```
+
+# traces de kore-backend-1
+
+```bash
+kore-backend-1 :: begin :: call get /req_1_2
+kore-backend-1 call GET https://localhost:8888/api
+kore-backend-1 call POST https://localhost:8888/api
+kore-backend-1 call PUT https://localhost:8888/api
+kore-backend-1 call DELETE https://localhost:8888/api
+kore-backend-1 :: end :: call get /req_1_2
+```
+
+# traces de kore-backend-2
+
+```bash
+api_get begin
+api_get end
+api_post begin
+api_post end
+api_put begin
+api_put end
+api_delete begin
+api_delete end
+```
